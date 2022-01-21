@@ -1,6 +1,6 @@
 
 
-buttons = [];
+var buttons = [];
 
 var end= window.location.search
 
@@ -70,16 +70,19 @@ function run(event) {
     if (id % cols != clicker) {
       return;
     }
-    console.log(id);
+
     fin = [];
+    console.log(id)
     for (var q = id; q >= 0; q = q - (cols - 1)) {
       getAbove(q).forEach((t) => fin.push(t));
+      if(q%cols==cols-1){break}
     }
 
     for (var q = id; q <= cols * 5; q = q + (cols + 1)) {
       getBelow(q).forEach((t) => fin.push(t));
+      if(q%cols==cols-1){break}
     }
-
+    console.log(fin)
     fin.forEach((f) => {
       buttons[f].style.color = "#ffffff";
       buttons[f].enabled = false;
