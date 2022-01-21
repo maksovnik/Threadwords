@@ -26,6 +26,7 @@ header {
   display: flex;
   justify-content: space-between;
   font-size: 3vw;
+  padding: 10px;
 }
 
 body,
@@ -33,20 +34,22 @@ header {
   font-size: 5vw;
 }
 
-.csscolumn {
-  -webkit-column-count: 4; /* Chrome, Safari, Opera */
-  -moz-column-count: 4; /* Firefox */
-  column-count: 4;
-  text-align: center;
-}
+
 
 .answers{
-    margin-bottom: 3px;
     color: white;
+    width: 20vh;
 }
 
 #col1{
-    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+    align-items: center;
+    height: 35vh;
+    flex-direction: column;
+    gap: 2px;
+
 }
 
 #bottom{
