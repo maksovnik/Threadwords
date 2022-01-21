@@ -1,0 +1,63 @@
+body {
+  padding: 0;
+  margin: 0;
+}
+
+#grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto auto auto auto;
+  background-color: #ffffff;
+  padding: 0px;
+  height: 50vh;
+  grid-gap: 10px;
+}
+.grid-item {
+  background-color: #d6d7d7;
+  font-size: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 5vw;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 3vw;
+}
+
+body,
+header {
+  font-size: 5vw;
+}
+
+.csscolumn {
+  -webkit-column-count: 4; /* Chrome, Safari, Opera */
+  -moz-column-count: 4; /* Firefox */
+  column-count: 4;
+  text-align: center;
+}
+
+.answers{
+    margin-bottom: 3px;
+    color: white;
+}
+
+#col1{
+    margin-top: 10px;
+}
+
+#bottom{
+    display:block;
+    position: fixed;
+    bottom: 0;
+    text-align: center;
+
+    padding: 10px;
+    background-color: #d6d7d7; 
+    left:10px;
+    right: 10px;
+
+}
