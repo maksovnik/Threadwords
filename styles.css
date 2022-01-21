@@ -9,7 +9,7 @@ body {
   background-color: #ffffff;
   padding: 0px;
   height: 50vh;
-  grid-gap: 10px;
+  grid-gap: 1px;
 }
 .grid-item {
   background-color: #d6d7d7;
@@ -17,7 +17,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 8px;
+  border-radius: 1px;
   font-weight: bold;
   font-size: 5vw;
 }
