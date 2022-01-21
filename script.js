@@ -174,14 +174,7 @@ words = [];
 
 found = [];
 
-function generateWords() {
-  for (var x = 0; x < 15; x++) {
-    var word = makeRandomWord();
-    words.push(word);
-  }
 
-  words.sort();
-}
 
 fetch("assets/final"+cols+".txt")
   .then((response) => response.text())
@@ -194,6 +187,9 @@ fetch("assets/final"+cols+".txt")
 
     words = randomElement[0].split(",");
     letters = randomElement[1].split("");
+
+
+    words = words.sort();
 
     words.forEach((word) => {
       var answer = document.createElement("div");
