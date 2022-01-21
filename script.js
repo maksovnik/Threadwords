@@ -137,14 +137,19 @@ button.trig = "end"
 button.onclick = e =>{
 
     if(button.trig=="end"){
-        answers = document.getElementById("col1").children;
-        for(var i =0;i<answers.length;i++){
-            answers[i].text.style.visibility = "visible"
+
+        if (confirm("Do you really want to give up?") == true) {
+            
+            answers = document.getElementById("col1").children;
+            for(var i =0;i<answers.length;i++){
+                answers[i].text.style.visibility = "visible"
+            }
+            found = words;
+        
+            button.innerHTML = "New Game"
+            button.trig = "refresh"
+
         }
-        found = words;
-    
-        button.innerHTML = "New Game"
-        button.trig = "refresh"
     }
     else{
         window.location.replace("/?4");
