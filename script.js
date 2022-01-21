@@ -4,6 +4,11 @@ var buttons = [];
 
 var end= window.location.search
 
+var win = new Audio("assets/win.wav");
+var correct = new Audio("assets/sound.wav");
+var click = new Audio("assets/click.wav");
+var level = new Audio("assets/newlevel.wav");
+
 var res = end.split('?')
 if(end==""){
     cols = 4
@@ -51,8 +56,8 @@ var word = "";
 
 
 if(cols != 4){
-    var snd = new Audio("assets/newlevel.wav");
-    snd.play();
+
+    level.play();
 }
 
 
@@ -64,8 +69,7 @@ function run(event) {
 
   if (thisElement.enabled) {
 
-    var snd = new Audio("assets/click.wav");
-    snd.play();
+    click.play();
 
     if (id % cols != clicker) {
       return;
@@ -109,8 +113,7 @@ function run(event) {
 
                 if(words.every((item)=>found.includes(item))){
                     if(cols == 8){
-                        var snd = new Audio("assets/win.wav");
-                        snd.play();
+                        win.play();
                         alert("You Won! Congrats!!")
                         return;
                     }
@@ -119,8 +122,8 @@ function run(event) {
                     window.location.replace("/?"+(cols+1)+"?"+score);
                 }
                 else{
-                    var snd = new Audio("assets/sound.wav");
-                    snd.play();
+                    
+                    correct.play()
                 }
             }
 
