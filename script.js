@@ -172,7 +172,7 @@ button.onclick = e =>{
     if(button.trig=="end"){
 
         if (confirm("Do you really want to give up?") == true) {
-            
+            clearInterval(timer)
             answers = document.getElementById("col1").children;
             for(var i =0;i<answers.length;i++){
                 answers[i].text.style.visibility = "visible"

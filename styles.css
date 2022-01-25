@@ -3,12 +3,16 @@ body {
   margin: 0;
 }
 
+
+html{
+    height: 100%;
+}
 #grid-container {
   display: grid;
   grid-template-columns: auto auto auto auto auto auto;
   background-color: #ffffff;
   padding: 0px;
-  height: 45vh;
+  height: 50vh;
   grid-gap: 1px;
 }
 .grid-item {
@@ -42,6 +46,10 @@ header {
 .answers{
     color: white;
     width: 20vh;
+    /* outline-style: solid; */
+    padding: 1px;
+    box-sizing: border-box;
+    border: 1px solid white;
 } 
 
 
@@ -51,7 +59,7 @@ header {
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    height: 35vh;
+    height: 40vh;
     text-align: center;
   }
 
@@ -62,5 +70,6 @@ header {
     text-align: center;
     height: 5vh;
     background-color: #d6d7d7; 
+    line-height: 5vh;
 
 }
