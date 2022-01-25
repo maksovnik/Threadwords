@@ -62,9 +62,11 @@ function pad(val) {
 }
 
 function reset() {
-  buttons.forEach((button) => {
+    console.log(buttons)
+  buttons.forEach(button => {
     button.style.color = "#000000";
     button.enabled = true;
+    button.style.backgroundColor = "#d6d7d7"
   });
   console.log(word);
   word = "";
@@ -113,6 +115,8 @@ function run(event) {
 
     clicker++;
     word = word + thisElement.innerHTML;
+
+    thisElement.style.color = "#4db5ff";
 
     if (id % cols == cols - 1) {
       if (words.includes(word)) {
