@@ -4,10 +4,12 @@ var buttons = [];
 
 var end= window.location.search
 
+var curWord = document.getElementById("curWord")
 var win = new Audio("assets/win.wav");
 var correct = new Audio("assets/sound.wav");
 var click = new Audio("assets/click.wav");
 var level = new Audio("assets/newlevel.wav");
+
 
 var res = end.split('?')
 if(end==""){
@@ -26,7 +28,7 @@ else{
     var totalSeconds = 0
 }
 
-
+curWord.innerHTML = "_ ".repeat(cols)
 
 function getAbove(id) {
   d = [];
@@ -163,6 +165,8 @@ function run(event) {
   } else {
     reset();
   }
+  
+  curWord.innerHTML = word.split('').join(' ') + (" _".repeat(cols-word.length))
 }
 
 button = document.getElementById("bottom")

@@ -5,7 +5,7 @@ body {
 
 
 html{
-    height: 100%;
+    height: 100vh;
 }
 #grid-container {
   display: grid;
@@ -53,13 +53,19 @@ header {
 } 
 
 
+#curWord{
+    height: 5vh;
+    line-height: 5vh;
+    font-weight: bold;
+    text-align: center;
+}
 #col1{
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    height: 40vh;
+    height: 35vh;
     text-align: center;
   }
 
