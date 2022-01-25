@@ -7,6 +7,7 @@ var win = new Audio("assets/win.wav");
 var correct = new Audio("assets/sound.wav");
 var click = new Audio("assets/click.wav");
 var level = new Audio("assets/newlevel.wav");
+var hint = new Audio("assets/hint.wav");
 
 var res = end.split("?");
 if (end == "") {
@@ -211,38 +212,39 @@ function repLetter(word,letters){
 
 hintButton.onclick = e =>{
     if(hints<=0){
-        return
+        return;
     }
-    var difference = words.filter(x => !found.includes(x));
 
+    if (confirm("Do you really want to use a hint?") == true) {
+        hint.play()
+        var difference = words.filter(x => !found.includes(x));
 
-
-    var rword = difference[Math.floor(Math.random() * difference.length)];
-
-
-    answers = document.getElementById("col1").children;
-    for (var i = 0; i < answers.length; i++) {
-        if (answers[i].word == rword) {
-
-            hintArray = answers[i].hints
-            console.log(hintArray)
-            wordArray = rword.split('')
-            remainingHints = wordArray.filter(x => !hintArray.includes(x));
+        var rword = difference[Math.floor(Math.random() * difference.length)];
         
-            var rLetter = remainingHints[Math.floor(Math.random() * remainingHints.length)];
+        answers = document.getElementById("col1").children;
+        for (var i = 0; i < answers.length; i++) {
+            if (answers[i].word == rword) {
 
-            answers[i].hints.push(rLetter)
-            answers[i].text.innerHTML = repLetter(rword,answers[i].hints)
-            answers[i].text.style.visibility = "visible"
+                hintArray = answers[i].hints
+                console.log(hintArray)
+                wordArray = rword.split('')
+                remainingHints = wordArray.filter(x => !hintArray.includes(x));
+            
+                var rLetter = remainingHints[Math.floor(Math.random() * remainingHints.length)];
 
-            if(answers[i].text.innerHTML== answers[i].word){
-                foundWord(answers[i].word)
+                answers[i].hints.push(rLetter)
+                answers[i].text.innerHTML = repLetter(rword,answers[i].hints)
+                answers[i].text.style.visibility = "visible"
+
+                if(answers[i].text.innerHTML== answers[i].word){
+                    foundWord(answers[i].word)
+                }
+
             }
-
         }
+        hints = hints-1
+        hintButton.innerHTML = "Hint:"+hints
     }
-    hints = hints-1
-    hintButton.innerHTML = "Hint:"+hints
 }
 
 var container = document.getElementById("grid-container");
