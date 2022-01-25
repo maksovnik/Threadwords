@@ -1,34 +1,29 @@
-
-
 var buttons = [];
 
-var end= window.location.search
+var end = window.location.search;
 
-var curWord = document.getElementById("curWord")
+var curWord = document.getElementById("curWord");
 var win = new Audio("assets/win.wav");
 var correct = new Audio("assets/sound.wav");
 var click = new Audio("assets/click.wav");
 var level = new Audio("assets/newlevel.wav");
 
-
-var res = end.split('?')
-if(end==""){
-    cols = 4
-}
-else{
-    cols = parseInt(res[1])
+var res = end.split("?");
+if (end == "") {
+  cols = 4;
+} else {
+  cols = parseInt(res[1]);
 }
 
-if (res.length > 2){
-    score=res[2]
-    var totalSeconds = res[3]
-}
-else{
-    score ="0";
-    var totalSeconds = 0
+if (res.length > 2) {
+  score = res[2];
+  var totalSeconds = res[3];
+} else {
+  score = "0";
+  var totalSeconds = 0;
 }
 
-curWord.innerHTML = "_ ".repeat(cols)
+curWord.innerHTML = "_ ".repeat(cols);
 
 function getAbove(id) {
   d = [];
@@ -45,7 +40,6 @@ function getBelow(id) {
   }
   return d;
 }
-
 
 var minutesLabel = document.getElementById("minutes");
 var secondsLabel = document.getElementById("seconds");
@@ -67,7 +61,6 @@ function pad(val) {
   }
 }
 
-
 function reset() {
   buttons.forEach((button) => {
     button.style.color = "#000000";
@@ -82,21 +75,15 @@ var clicker = 0;
 
 var word = "";
 
-
-if(cols != 4){
-
-    level.play();
+if (cols != 4) {
+  level.play();
 }
-
 
 function run(event) {
   var id = parseInt(event.target.id);
   var thisElement = buttons[id];
 
-
-
   if (thisElement.enabled) {
-
     click.play();
 
     if (id % cols != clicker) {
@@ -104,17 +91,21 @@ function run(event) {
     }
 
     fin = [];
-    console.log(id)
+    console.log(id);
     for (var q = id; q >= 0; q = q - (cols - 1)) {
       getAbove(q).forEach((t) => fin.push(t));
-      if(q%cols==cols-1){break}
+      if (q % cols == cols - 1) {
+        break;
+      }
     }
 
     for (var q = id; q <= cols * 5; q = q + (cols + 1)) {
       getBelow(q).forEach((t) => fin.push(t));
-      if(q%cols==cols-1){break}
+      if (q % cols == cols - 1) {
+        break;
+      }
     }
-    console.log(fin)
+    console.log(fin);
     fin.forEach((f) => {
       buttons[f].style.color = "#ffffff";
       buttons[f].enabled = false;
@@ -126,74 +117,66 @@ function run(event) {
     if (id % cols == cols - 1) {
       if (words.includes(word)) {
         answers = document.getElementById("col1").children;
-        console
-        for(var i =0;i<answers.length;i++){
+        for (var i = 0; i < answers.length; i++) {
           if (answers[i].text.innerHTML == word) {
             console.log("yay");
-            answers[i].text.style.visibility = "visible"
+            answers[i].text.style.visibility = "visible";
 
-            if(!found.includes(word)){
-                score = parseInt(score) + 80
-                scoreElem.innerHTML = "Score:" + score;
-                found.push(word)
+            if (!found.includes(word)) {
+              score = parseInt(score) + 80;
+              scoreElem.innerHTML = "Score:" + score;
+              found.push(word);
 
-
-
-                if(words.every((item)=>found.includes(item))){
-                    if(cols == 8){
-                        win.play();
-                        alert("You Won! Congrats!!")
-                        clearInterval(timer)
-                        return;
-                    }
-
-
-                    window.location.replace("/?"+(cols+1)+"?"+score+"?"+totalSeconds);
+              if (words.every((item) => found.includes(item))) {
+                if (cols == 8) {
+                  win.play();
+                  alert("You Won! Congrats!!");
+                  clearInterval(timer);
+                  return;
                 }
-                else{
-                    
-                    correct.play()
-                }
+
+                window.location.replace(
+                  "/?" + (cols + 1) + "?" + score + "?" + totalSeconds
+                );
+              } else {
+                correct.play();
+              }
             }
 
             break;
           }
-        };
+        }
       }
+      curWord.innerHTML = word.split("").join(" ") + " _".repeat(cols - word.length);
       reset();
+    } else {
+      curWord.innerHTML =  word.split("").join(" ") + " _".repeat(cols - word.length);
     }
   } else {
     reset();
+    curWord.innerHTML =  word.split("").join(" ") + " _".repeat(cols - word.length);
   }
-  
-  curWord.innerHTML = word.split('').join(' ') + (" _".repeat(cols-word.length))
 }
 
-button = document.getElementById("bottom")
-button.trig = "end"
-button.onclick = e =>{
+button = document.getElementById("bottom");
+button.trig = "end";
+button.onclick = (e) => {
+  if (button.trig == "end") {
+    if (confirm("Do you really want to give up?") == true) {
+      clearInterval(timer);
+      answers = document.getElementById("col1").children;
+      for (var i = 0; i < answers.length; i++) {
+        answers[i].text.style.visibility = "visible";
+      }
+      found = words;
 
-    if(button.trig=="end"){
-
-        if (confirm("Do you really want to give up?") == true) {
-            clearInterval(timer)
-            answers = document.getElementById("col1").children;
-            for(var i =0;i<answers.length;i++){
-                answers[i].text.style.visibility = "visible"
-            }
-            found = words;
-        
-            button.innerHTML = "New Game"
-            button.trig = "refresh"
-
-        }
+      button.innerHTML = "New Game";
+      button.trig = "refresh";
     }
-    else{
-        window.location.replace("/?4");
-    }
-
-
-}
+  } else {
+    window.location.replace("/?4");
+  }
+};
 
 var container = document.getElementById("grid-container");
 
@@ -205,20 +188,16 @@ function makeRandomWord() {
   return t;
 }
 
-
-
 scoreElem = document.getElementById("score");
 level = document.getElementById("level");
 scoreElem.innerHTML = "Score:" + score;
-level.innerHTML = "Level:" + (cols-3);
+level.innerHTML = "Level:" + (cols - 3);
 
 words = [];
 
 found = [];
 
-
-
-fetch("assets/final"+cols+".txt")
+fetch("assets/final" + cols + ".txt")
   .then((response) => response.text())
   .then((text) => {
     boards = text.split("\n");
@@ -230,13 +209,12 @@ fetch("assets/final"+cols+".txt")
     words = randomElement[0].split(",");
     letters = randomElement[1].split("");
 
-
     words = words.sort();
 
     words.forEach((word) => {
       var answer = document.createElement("div");
       var text = document.createElement("div");
-      answer.classList.add("answers")
+      answer.classList.add("answers");
       answer.text = text;
       text.style.visibility = "hidden";
       text.innerHTML = word;
@@ -262,5 +240,3 @@ fetch("assets/final"+cols+".txt")
 
     container.style.gridTemplateColumns = "auto ".repeat(cols);
   });
-
-
