@@ -13,7 +13,8 @@ html{
   background-color: #ffffff;
   padding: 0px;
   height: 50vh;
-  grid-gap: 1px;
+  box-sizing: border-box;
+  border: 1px solid white;
 }
 .grid-item {
   background-color: #d6d7d7;
@@ -45,9 +46,6 @@ header {
 
 .answers{
     color: white;
-    width: 20vh;
-    /* outline-style: solid; */
-    padding: 1px;
     box-sizing: border-box;
     border: 1px solid white;
 } 
@@ -62,8 +60,6 @@ header {
 #col1{
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
     flex-direction: column;
     height: 35vh;
     text-align: center;
