@@ -68,10 +68,26 @@ header {
 
 #bottom{
     display:block;
-
     text-align: center;
     height: 5vh;
-    background-color: #d6d7d7; 
-    line-height: 5vh;
 
+    line-height: 5vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
 }
+
+#gu{
+    display:block;
+    text-align: center;
+    background-color: #d6d7d7;
+    width: 45vw;
+}
+#hint{
+    display:block;
+    text-align: center;
+    background-color: #d6d7d7; 
+    width: 45vw;
+}
+
+

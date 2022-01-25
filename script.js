@@ -18,10 +18,17 @@ if (end == "") {
 if (res.length > 2) {
   score = res[2];
   var totalSeconds = res[3];
+  var hints = res[4]
 } else {
-  score = "0";
+  var score = "0";
   var totalSeconds = 0;
+  var hints = 3
 }
+
+var hintButton = document.getElementById("hint")
+hintButton.innerHTML = "Hint:"+hints
+
+
 
 curWord.innerHTML = "_ ".repeat(cols);
 
@@ -122,8 +129,9 @@ function run(event) {
       if (words.includes(word)) {
         answers = document.getElementById("col1").children;
         for (var i = 0; i < answers.length; i++) {
-          if (answers[i].text.innerHTML == word) {
+          if (answers[i].word == word) {
             console.log("yay");
+            answers[i].text.innerHTML = answers[i].word
             answers[i].text.style.visibility = "visible";
 
             if (!found.includes(word)) {
@@ -140,7 +148,7 @@ function run(event) {
                 }
 
                 window.location.replace(
-                  "/?" + (cols + 1) + "?" + score + "?" + totalSeconds
+                  "/?" + (cols + 1) + "?" + score + "?" + totalSeconds + "?" + hints
                 );
               } else {
                 correct.play();
@@ -162,7 +170,7 @@ function run(event) {
   }
 }
 
-button = document.getElementById("bottom");
+button = document.getElementById("gu");
 button.trig = "end";
 button.onclick = (e) => {
   if (button.trig == "end") {
@@ -171,6 +179,7 @@ button.onclick = (e) => {
       answers = document.getElementById("col1").children;
       for (var i = 0; i < answers.length; i++) {
         answers[i].text.style.visibility = "visible";
+        answers[i].text.innerHTML = answers[i].word
       }
       found = words;
 
@@ -181,6 +190,41 @@ button.onclick = (e) => {
     window.location.replace("/?4");
   }
 };
+
+
+function repLetter(word,letter){
+    str = ""
+    for(let l of word){
+        if(l!=letter){
+            str = str + "_"
+        }
+        else{
+            str = str + letter
+        }
+    }
+    return str
+}
+
+
+hintButton.onclick = e =>{
+    if(hints<=0){
+        return
+    }
+    var difference = words.filter(x => !found.includes(x));
+    console.log(difference)
+    var rword = difference[Math.floor(Math.random() * difference.length)];
+    var rLetter = rword[Math.floor(Math.random() * rword.length)];
+    answers = document.getElementById("col1").children;
+    for (var i = 0; i < answers.length; i++) {
+        if (answers[i].text.innerHTML == rword) {
+            console.log(rword)
+            answers[i].text.innerHTML = repLetter(rword,rLetter)
+            answers[i].text.style.visibility = "visible"
+        }
+    }
+    hints = hints-1
+    hintButton.innerHTML = "Hint:"+hints
+}
 
 var container = document.getElementById("grid-container");
 
@@ -237,6 +281,7 @@ fetch("assets/final" + cols + ".txt")
       child.enabled = true;
       child.classList.add("grid-item");
       child.innerHTML = letters[x];
+      child.word = letters[x]
       container.appendChild(child);
       console.log("hi");
       buttons.push(child);
