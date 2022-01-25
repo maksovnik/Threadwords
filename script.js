@@ -19,10 +19,14 @@ else{
 
 if (res.length > 2){
     score=res[2]
+    var totalSeconds = res[3]
 }
 else{
     score ="0";
+    var totalSeconds = 0
 }
+
+
 
 function getAbove(id) {
   d = [];
@@ -39,6 +43,28 @@ function getBelow(id) {
   }
   return d;
 }
+
+
+var minutesLabel = document.getElementById("minutes");
+var secondsLabel = document.getElementById("seconds");
+
+var timer = setInterval(setTime, 1000);
+
+function setTime() {
+  ++totalSeconds;
+  secondsLabel.innerHTML = pad(totalSeconds % 60);
+  minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
+}
+
+function pad(val) {
+  var valString = val + "";
+  if (valString.length < 2) {
+    return "0" + valString;
+  } else {
+    return valString;
+  }
+}
+
 
 function reset() {
   buttons.forEach((button) => {
@@ -115,11 +141,12 @@ function run(event) {
                     if(cols == 8){
                         win.play();
                         alert("You Won! Congrats!!")
+                        clearInterval(timer)
                         return;
                     }
 
 
-                    window.location.replace("/?"+(cols+1)+"?"+score);
+                    window.location.replace("/?"+(cols+1)+"?"+score+"?"+totalSeconds);
                 }
                 else{
                     
