@@ -88,6 +88,27 @@ if (cols != 4) {
   level.play();
 }
 
+
+function foundWord(word){
+    score = parseInt(score) + 80;
+    scoreElem.innerHTML = "Score:" + score;
+    found.push(word);
+
+    if (words.every((item) => found.includes(item))) {
+      if (cols == 8) {
+        win.play();
+        alert("You Won! Congrats!!");
+        clearInterval(timer);
+        return;
+      }
+
+      window.location.replace(
+        "/?" + (cols + 1) + "?" + score + "?" + totalSeconds + "?" + hints
+      );
+    } else {
+      correct.play();
+    }
+}
 function run(event) {
   var id = parseInt(event.target.id);
   var thisElement = buttons[id];
@@ -135,24 +156,7 @@ function run(event) {
             answers[i].text.style.visibility = "visible";
 
             if (!found.includes(word)) {
-              score = parseInt(score) + 80;
-              scoreElem.innerHTML = "Score:" + score;
-              found.push(word);
-
-              if (words.every((item) => found.includes(item))) {
-                if (cols == 8) {
-                  win.play();
-                  alert("You Won! Congrats!!");
-                  clearInterval(timer);
-                  return;
-                }
-
-                window.location.replace(
-                  "/?" + (cols + 1) + "?" + score + "?" + totalSeconds + "?" + hints
-                );
-              } else {
-                correct.play();
-              }
+                foundWord(word)
             }
 
             break;
@@ -192,34 +196,49 @@ button.onclick = (e) => {
 };
 
 
-function repLetter(word,letter){
+function repLetter(word,letters){
     str = ""
     for(let l of word){
-        if(l!=letter){
+        if(!letters.includes(l)){
             str = str + "_"
         }
         else{
-            str = str + letter
+            str = str + l
         }
     }
     return str
 }
-
 
 hintButton.onclick = e =>{
     if(hints<=0){
         return
     }
     var difference = words.filter(x => !found.includes(x));
-    console.log(difference)
+
+
+
     var rword = difference[Math.floor(Math.random() * difference.length)];
-    var rLetter = rword[Math.floor(Math.random() * rword.length)];
+
+
     answers = document.getElementById("col1").children;
     for (var i = 0; i < answers.length; i++) {
-        if (answers[i].text.innerHTML == rword) {
-            console.log(rword)
-            answers[i].text.innerHTML = repLetter(rword,rLetter)
+        if (answers[i].word == rword) {
+
+            hintArray = answers[i].hints
+            console.log(hintArray)
+            wordArray = rword.split('')
+            remainingHints = wordArray.filter(x => !hintArray.includes(x));
+        
+            var rLetter = remainingHints[Math.floor(Math.random() * remainingHints.length)];
+
+            answers[i].hints.push(rLetter)
+            answers[i].text.innerHTML = repLetter(rword,answers[i].hints)
             answers[i].text.style.visibility = "visible"
+
+            if(answers[i].text.innerHTML== answers[i].word){
+                foundWord(answers[i].word)
+            }
+
         }
     }
     hints = hints-1
@@ -252,13 +271,13 @@ fetch("assets/final" + cols + ".txt")
     res = boards.map((x) => x.split("#"));
 
     const randomElement = res[Math.floor(Math.random() * res.length)];
-    console.log(randomElement);
+
 
     words = randomElement[0].split(",");
     letters = randomElement[1].split("");
 
     words = words.sort();
-
+    console.log(words);
     words.forEach((word) => {
       var answer = document.createElement("div");
       var text = document.createElement("div");
@@ -270,7 +289,7 @@ fetch("assets/final" + cols + ".txt")
       answer.appendChild(text);
       answer.word = word;
       answer.style.backgroundColor = "grey";
-
+      answer.hints = []
       document.getElementById("col1").appendChild(answer);
     });
 
